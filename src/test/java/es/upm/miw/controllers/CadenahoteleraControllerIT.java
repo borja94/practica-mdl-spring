@@ -28,6 +28,6 @@ public class CadenahoteleraControllerIT {
     public void getAllTest() {
         assertEquals(true,this.cadenaHoteleraController.getAll().size()>0);
     }
-    
+       
 
 }
