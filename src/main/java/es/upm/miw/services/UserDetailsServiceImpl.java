@@ -30,29 +30,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(final String mobileOrTokenValue) {
         User user = userRepository.findByTokenValue(mobileOrTokenValue);
         if (user != null) {
-            return this.userBuilder(user.getMobile(), new BCryptPasswordEncoder().encode(P_TOKEN), user.getRoles(), user.isActive());
+            return this.userBuilder(user.getEmail(), new BCryptPasswordEncoder().encode(P_TOKEN), user.getRole());
         } else {
-            user = userRepository.findByMobile(mobileOrTokenValue);
+            user = userRepository.findByEmail(mobileOrTokenValue);
             if (user != null) {
-                return this.userBuilder(String.valueOf(user.getMobile()), user.getPassword(), new Role[] {Role.AUTHENTICATED},
-                        user.isActive());
+                return this.userBuilder(user.getEmail(), user.getPassword(), user.getRole());
             } else {
                 throw new UsernameNotFoundException("Username-token not found. " + mobileOrTokenValue);
             }
         }
     }
 
-    private org.springframework.security.core.userdetails.User userBuilder(String mobile, String password, Role[] roles, boolean active) {
+    private org.springframework.security.core.userdetails.User userBuilder(String email, String password, Role role) {
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
 
-        boolean enabled = active;
+        boolean enabled = true;
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.roleName()));
-        }
-        return new org.springframework.security.core.userdetails.User(mobile, password, enabled, accountNonExpired, credentialsNonExpired,
+
+        authorities.add(new SimpleGrantedAuthority(role.roleName()));
+
+        return new org.springframework.security.core.userdetails.User(email, password, enabled, accountNonExpired, credentialsNonExpired,
                 accountNonLocked, authorities);
     }
 }

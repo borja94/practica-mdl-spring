@@ -33,7 +33,7 @@ public class UserResource {
 
     public static final String USERS = "/users";
 
-    public static final String MOBILE_ID = "/{mobile}";
+    public static final String USER_ID = "/{id}";
 
     public static final String SEARCH = "/search";
 
@@ -41,64 +41,43 @@ public class UserResource {
     private UserController userController;
 
     @PostMapping
-    public void createCustomer(@Valid @RequestBody UserDto userDto) throws UserFieldAlreadyExistException {
+    public void createUser(@Valid @RequestBody UserDto userDto) throws UserFieldAlreadyExistException {
         if (userDto.getPassword() == null) {
-            userDto.setPassword(UUID.randomUUID().toString());
+            userDto.setPassword("admin");
         }
-        if (this.userController.existsMobile(userDto.getMobile())) {
-            throw new UserFieldAlreadyExistException("Existing mobile");
-        }
-        if (this.userController.emailRepeated(userDto)) {
+        if (this.userController.existsEmail(userDto.getEmail())) {
             throw new UserFieldAlreadyExistException("Existing email");
         }
-        if (this.userController.dniRepeated(userDto)) {
-            throw new UserFieldAlreadyExistException("Existing dni");
-        }
-        this.userController.createUser(userDto, new Role[] {Role.CUSTOMER});
+
+        this.userController.createUser(userDto);
     }
 
-    @PutMapping(value = MOBILE_ID)
-    public void putCustomer(@PathVariable String mobile, @Valid @RequestBody UserDto userDto)
+    @PutMapping(value = USER_ID)
+    public void putCustomer(@PathVariable String id, @Valid @RequestBody UserDto userDto)
             throws ForbiddenException, UserIdNotFoundException, UserFieldAlreadyExistException {
-        if (!this.userController.existsMobile(mobile)) {
-            throw new UserIdNotFoundException("Not existing mobile");
+        if (!this.userController.existsEmail(userDto.getEmail())) {
+            throw new UserIdNotFoundException("Not existing email");
         }
-        if (this.userController.mobileRepeated(mobile, userDto)) {
-            throw new UserFieldAlreadyExistException("Existing mobile");
-        }
-        if (this.userController.emailRepeated(mobile, userDto)) {
-            throw new UserFieldAlreadyExistException("Existing email");
-        }
-        if (this.userController.dniRepeated(mobile, userDto)) {
-            throw new UserFieldAlreadyExistException("Existing dni");
-        }
-        if (!this.userController.putUser(mobile, userDto, new Role[] {Role.CUSTOMER})) {
+        if (!this.userController.putUser(userDto)) {
             throw new ForbiddenException();
         }
     }
 
-    @DeleteMapping(value = MOBILE_ID)
-    public void deleteCustomer(@PathVariable String mobile) throws ForbiddenException {
-        if (!this.userController.deleteUser(mobile, new Role[] {Role.CUSTOMER})) {
+    @DeleteMapping(value = USER_ID)
+    public void deleteCustomer(@PathVariable String id) throws ForbiddenException {
+        if (!this.userController.deleteUser(id)){
             throw new ForbiddenException();
         }
     }
 
-    @RequestMapping(value = MOBILE_ID, method = RequestMethod.GET)
-    public UserDto readCustomer(@PathVariable String mobile) throws UserIdNotFoundException {
-        return this.userController.readUser(mobile, new Role[] {Role.CUSTOMER}).orElseThrow(() -> new UserIdNotFoundException(mobile));
+    @RequestMapping(value = USER_ID, method = RequestMethod.GET)
+    public UserDto readCustomer(@PathVariable String id) throws UserIdNotFoundException {
+        return this.userController.readUser(id).orElseThrow(() -> new UserIdNotFoundException(id));
     }
 
     @GetMapping
-    public List<UserMinimumDto> readCustomerAll() {
-        return this.userController.readCustomerAll();
-    }
-
-    @GetMapping(value = SEARCH)
-    public List<UserMinimumDto> readFilterUser(@RequestParam(required = false) String mobile,
-            @RequestParam(required = false) String username, @RequestParam(required = false) String dni,
-            @RequestParam(required = false) String address) {
-        return this.userController.find(mobile, username, dni, address);
+    public List<UserDto> readCustomerAll() {
+        return this.userController.readClientAll();
     }
 
 }

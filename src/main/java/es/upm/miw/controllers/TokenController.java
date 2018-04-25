@@ -14,8 +14,8 @@ public class TokenController {
     @Autowired
     private UserRepository userRepository;
 
-    public TokenOutputDto login(String mobile) {
-        User user = userRepository.findByMobile(mobile);
+    public TokenOutputDto login(String email) {
+        User user = userRepository.findByEmail(email);
         assert user != null;
         user.setToken(new Token());
         userRepository.save(user);
