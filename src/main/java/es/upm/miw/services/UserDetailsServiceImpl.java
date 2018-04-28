@@ -27,28 +27,35 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(final String mobileOrTokenValue) {
-        User user = userRepository.findByTokenValue(mobileOrTokenValue);
+    public UserDetails loadUserByUsername(final String emailOrTokenValue) {
+        User user = userRepository.findByTokenValue(emailOrTokenValue);
         if (user != null) {
             return this.userBuilder(user.getEmail(), new BCryptPasswordEncoder().encode(P_TOKEN), user.getRole());
         } else {
-            user = userRepository.findByEmail(mobileOrTokenValue);
+            user = userRepository.findByEmail(emailOrTokenValue);
             if (user != null) {
                 return this.userBuilder(user.getEmail(), user.getPassword(), user.getRole());
             } else {
-                throw new UsernameNotFoundException("Username-token not found. " + mobileOrTokenValue);
+                throw new UsernameNotFoundException("Username-token not found. " + emailOrTokenValue);
             }
         }
+//        if ("client".equals(emailOrTokenValue)) {
+//            return this.userBuilder(emailOrTokenValue, new BCryptPasswordEncoder().encode("client"), Role.CLIENT);
+//        } else if ("hotel_resp".equals(emailOrTokenValue)) {
+//            return this.userBuilder(emailOrTokenValue, new BCryptPasswordEncoder().encode("hotel_resp"), Role.HOTEL_RESP);
+//        } else {
+//            throw new UsernameNotFoundException("Usuario no encontrado");
+//        }
+
     }
 
     private org.springframework.security.core.userdetails.User userBuilder(String email, String password, Role role) {
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
-
         boolean enabled = true;
-        List<GrantedAuthority> authorities = new ArrayList<>();
 
+        List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(role.roleName()));
 
         return new org.springframework.security.core.userdetails.User(email, password, enabled, accountNonExpired, credentialsNonExpired,

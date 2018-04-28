@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import es.upm.miw.documents.core.User;
-import es.upm.miw.dtos.UserMinimumDto;
 
 public interface UserRepository extends MongoRepository<User, String> {
 

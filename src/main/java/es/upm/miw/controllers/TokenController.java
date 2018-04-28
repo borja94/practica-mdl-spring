@@ -1,5 +1,7 @@
 package es.upm.miw.controllers;
 
+import es.upm.miw.dtos.UserDto;
+import es.upm.miw.dtos.UserLoginDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -14,8 +16,8 @@ public class TokenController {
     @Autowired
     private UserRepository userRepository;
 
-    public TokenOutputDto login(String email) {
-        User user = userRepository.findByEmail(email);
+    public TokenOutputDto login(String userAuthenticated) {
+        User user = userRepository.findByEmail(userAuthenticated);
         assert user != null;
         user.setToken(new Token());
         userRepository.save(user);

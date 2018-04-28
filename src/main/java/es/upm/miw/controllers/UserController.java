@@ -1,6 +1,5 @@
 package es.upm.miw.controllers;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import es.upm.miw.documents.core.Role;
 import es.upm.miw.documents.core.User;
 import es.upm.miw.dtos.UserDto;
-import es.upm.miw.dtos.UserMinimumDto;
 import es.upm.miw.repositories.core.UserRepository;
 
 @Controller

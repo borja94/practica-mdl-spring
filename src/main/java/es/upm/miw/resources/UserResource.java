@@ -1,7 +1,6 @@
 package es.upm.miw.resources;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -15,18 +14,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.upm.miw.controllers.UserController;
-import es.upm.miw.documents.core.Role;
 import es.upm.miw.dtos.UserDto;
-import es.upm.miw.dtos.UserMinimumDto;
 import es.upm.miw.resources.exceptions.ForbiddenException;
 import es.upm.miw.resources.exceptions.UserFieldAlreadyExistException;
 import es.upm.miw.resources.exceptions.UserIdNotFoundException;
 
-@PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('OPERATOR')")
+// @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('OPERATOR')")
 @RestController
 @RequestMapping(UserResource.USERS)
 public class UserResource {
