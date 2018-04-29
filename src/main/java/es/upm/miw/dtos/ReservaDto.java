@@ -13,10 +13,14 @@ public class ReservaDto {
     private String nombreHotel;
 
     private String nombreUsuario;
-
+    
     private Date fecha;
+    
+    private Date fechaSalida;
 
     private String hora;
+
+    private String horaSalida;
 
     public ReservaDto() {
 
@@ -133,5 +137,21 @@ public class ReservaDto {
         return "ReservaDto [id=" + id + ", nombreHotel=" + nombreHotel + ", nombreUsuario=" + nombreUsuario + ", fecha=" + fecha + ", hora="
                 + hora + "]";
     }
+
+	public Date getFechaSalida() {
+		return fechaSalida;
+	}
+
+	public void setFechaSalida(Date fechaSalida) {
+		this.fechaSalida = fechaSalida;
+	}
+
+	public String getHoraSalida() {
+		return horaSalida;
+	}
+
+	public void setHoraSalida(String horaSalida) {
+		this.horaSalida = horaSalida;
+	}
 
 }
