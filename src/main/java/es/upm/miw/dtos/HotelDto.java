@@ -1,18 +1,12 @@
-package es.upm.miw.documents.core;
+package es.upm.miw.dtos;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+public class HotelDto {
 
-@Document
-public class Hotel {
-
-	public Hotel() {
+	public HotelDto() {
 		super();
 	}
 
-	public Hotel(String hotelName, String hotelChainName, String adress, String managerName,
-			String managerSurname) {
+	public HotelDto(String hotelName, String hotelChainName, String adress, String managerName, String managerSurname) {
 		super();
 		HotelName = hotelName;
 		HotelChainName = hotelChainName;
@@ -21,13 +15,8 @@ public class Hotel {
 		ManagerSurname = managerSurname;
 	}
 
-	@Id
-	private String id;
-
-	@Indexed
 	private String HotelName;
 
-	@Indexed
 	private String HotelChainName;
 
 	private String Adress;
@@ -35,14 +24,6 @@ public class Hotel {
 	private String ManagerName;
 
 	private String ManagerSurname;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		id = id;
-	}
 
 	public String getHotelName() {
 		return HotelName;
