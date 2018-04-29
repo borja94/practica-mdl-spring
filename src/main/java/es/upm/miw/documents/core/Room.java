@@ -25,6 +25,9 @@ public class Room {
 
 	@Indexed
 	private int RoomNumber;
+	
+	@Indexed
+	private String HotelName;
 
 	private String Characteristics;
 
