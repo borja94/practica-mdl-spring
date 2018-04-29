@@ -11,10 +11,11 @@ public class Room {
 		super();
 	}
 
-	public Room(String id, int roomNumber, String characteristics, Float price, RoomType roomType) {
+	public Room(int roomNumber, String hotelName, String characteristics, Float price,
+			es.upm.miw.documents.core.RoomType roomType) {
 		super();
-		Id = id;
 		RoomNumber = roomNumber;
+		HotelName = hotelName;
 		Characteristics = characteristics;
 		Price = price;
 		RoomType = roomType;
@@ -25,7 +26,7 @@ public class Room {
 
 	@Indexed
 	private int RoomNumber;
-	
+
 	@Indexed
 	private String HotelName;
 
@@ -73,6 +74,14 @@ public class Room {
 
 	public void setRoomType(RoomType roomType) {
 		RoomType = roomType;
+	}
+
+	public String getHotelName() {
+		return HotelName;
+	}
+
+	public void setHotelName(String hotelName) {
+		HotelName = hotelName;
 	}
 
 }
