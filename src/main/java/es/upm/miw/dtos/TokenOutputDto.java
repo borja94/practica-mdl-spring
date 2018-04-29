@@ -9,7 +9,7 @@ public class TokenOutputDto {
 
     private String token;
 
-    private Role[] roles;
+    private Role role;
     
     private long creationDate;
 
@@ -21,7 +21,7 @@ public class TokenOutputDto {
 
     public TokenOutputDto(User user) {
         this.token = user.getToken().getValue();
-        this.roles = user.getRoles();
+        this.role = user.getRole();
         this.creationDate = user.getToken().getCreationDate().getTime();
         this.lifetime = user.getToken().getLifetime();
     }
@@ -34,12 +34,12 @@ public class TokenOutputDto {
         this.token = token;
     }
 
-    public Role[] getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Role[] roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
     
     public long getCreationDate() {
@@ -60,6 +60,6 @@ public class TokenOutputDto {
 
     @Override
     public String toString() {
-        return "TokenDto [token=" + token + ", roles=" + Arrays.toString(roles) + "]";
+        return "TokenDto [token=" + token + ", role=" + role.roleName() + "]";
     }
 }

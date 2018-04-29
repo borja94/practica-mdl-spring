@@ -23,10 +23,8 @@ public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({
-        
         FileException.class,
         UserIdNotFoundException.class,
-       
     })
     @ResponseBody
     public ErrorMessage notFoundRequest(HttpServletRequest request, Exception exception) {
@@ -38,11 +36,8 @@ public class ApiExceptionHandler {
     @ExceptionHandler({
         MethodArgumentNotValidException.class,
         HttpMessageNotReadableException.class,
-        
-      
         FieldInvalidException.class,
         UserFieldAlreadyExistException.class,
-       
     })
     @ResponseBody
     public ErrorMessage badRequest(Exception exception) {
@@ -57,6 +52,7 @@ public class ApiExceptionHandler {
     })
     @ResponseBody
     public ErrorMessage forbiddenRequest(Exception exception) {
+        System.out.println(exception.toString());
         return new ErrorMessage(exception, "");
     }
     

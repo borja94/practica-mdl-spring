@@ -1,57 +1,36 @@
 package es.upm.miw.dtos;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import es.upm.miw.documents.core.Role;
 import es.upm.miw.documents.core.User;
 
+import javax.validation.constraints.NotNull;
+
 @JsonInclude(Include.NON_NULL)
-public class UserDto extends UserMinimumDto {
+public class UserDto {
+
+    @NotNull
+    private String email;
 
     private String password;
 
-    private String email;
-
-    private String dni;
-
-    private String address;
-
-    private Boolean active;
-    
-    private Role[] roles;
-
-    private Date registrationDate;
+    private Role role;
 
     public UserDto() {
         // Empty for framework
     }
 
-    public UserDto(String mobile, String username, String password, String email, String dni, String address, Boolean active, Role[] roles) {
-        super(mobile, username);
-        this.password = password;
+    public UserDto(String email, String password, Role role) {
         this.email = email;
-        this.setDni(dni);
-        this.address = address;
-        this.active = active;
-        this.roles = roles;
-    }
-
-    public UserDto(String mobileNamePass) {
-        this(mobileNamePass, "name" + mobileNamePass, "pass" + mobileNamePass, null, null, null, true, new Role[] {Role.CUSTOMER});
+        this.password = password;
+        this.role = role;
     }
 
     public UserDto(User user) {
-        super(user.getMobile(), user.getUsername());
         this.password = user.getPassword();
         this.email = user.getEmail();
-        this.dni = user.getDni();
-        this.address = user.getAddress();
-        this.active = user.isActive();
-        this.roles = user.getRoles();
-        this.registrationDate = user.getRegistrationDate();
+        this.role = user.getRole();
     }
 
     public String getPassword() {
@@ -74,59 +53,17 @@ public class UserDto extends UserMinimumDto {
         }
     }
 
-    public String getDni() {
-        return dni;
+    public Role getRole() {
+        return role;
     }
 
-    public void setDni(String dni) {
-        if (dni != null) {
-            this.dni = dni.toUpperCase();
-        } else {
-            this.dni = dni;
-        }
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Boolean isActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
-    }
-
-    
-	public Role[] getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Role[] roles) {
-		this.roles = roles;
-	}
-	
-	@Override
+    @Override
     public String toString() {
-        String date = "null";
-        if (registrationDate != null) {
-            date = new SimpleDateFormat("dd-MMM-yyyy").format(registrationDate.getTime());
-        }   
-        return "[" + super.toString() + "UserDto [password=" + password + ", email=" + email + ", dni=" + dni + ", address=" + address
-                + ", active=" + active + ", registrationDate=" + date + ", roles=" + java.util.Arrays.toString(roles) + "] ]";
+        return "[" + "UserDto [password=" + password + ", email=" + email + ", role=" + role.roleName() + "]";
     }
-	
+
 }

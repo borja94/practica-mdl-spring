@@ -15,64 +15,27 @@ public class User {
     private String id;
 
     @Indexed(unique = true)
-    private String mobile;
-    
-    private Date registrationDate;
-    
-    private String username;
+    private String email;
 
     private String password;
 
-    private Boolean active;
-
-    private String email;
-
-    private String dni;
-
-    private String address;
-
-    private Role[] roles;
+    private Role role;
 
     private Token token;
 
     public User() {
-        this.registrationDate = new Date();
-        this.active = true;
+
     }
 
-    public User(String mobile, String username, String password, String dni, String address, String email) {
+    public User(String email, String password, Role role) {
         this();
-        this.mobile = mobile;
-        this.username = username;
-        this.dni = dni;
-        this.address = address;
         this.email = email;
         this.setPassword(password);
-        this.roles = new Role[] {Role.CUSTOMER};
-    }
-
-    public User(String mobile, String username, String password) {
-        this(mobile, username, password, null, null, null);
+        this.role = role;
     }
 
     public String getId() {
         return id;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -83,18 +46,6 @@ public class User {
         this.password = new BCryptPasswordEncoder().encode(password);
     }
 
-    public Boolean isActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -103,28 +54,12 @@ public class User {
         this.email = email;
     }
 
-    public String getDni() {
-        return dni;
+    public Role getRole() {
+        return role;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Role[] getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Role[] roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Token getToken() {
@@ -137,7 +72,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return this.mobile.hashCode();
+        return this.email.hashCode();
     }
 
     @Override
@@ -151,17 +86,12 @@ public class User {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        return mobile.equals(((User) obj).mobile);
+        return email.equals(((User) obj).email);
     }
 
     @Override
     public String toString() {
-        String date = "null";
-        if (registrationDate != null) {
-            date = new SimpleDateFormat("dd-MMM-yyyy").format(registrationDate.getTime());
-        }
-        return "User [mobile=" + mobile + ", username=" + username + ", password=" + password + ", active=" + active + ", email=" + email
-                + ", dni=" + dni + ", address=" + address + ", registrationDate=" + date + ", roles=" + java.util.Arrays.toString(roles)
+        return "User [email=" + email + ", password=" + password + ", roles=" + role.roleName()
                 + ", token=" + token + "]";
     }
 
