@@ -1,6 +1,5 @@
 package es.upm.miw.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -21,8 +20,6 @@ public class HotelControllerIT {
 	@Autowired
 	private HotelController hotelController;
 
-	@Autowired
-	private HotelRepository hotelRepository;
 
 	@Before
 	public void before() {
