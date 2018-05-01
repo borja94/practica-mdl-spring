@@ -27,6 +27,10 @@ public class ReservaResource {
 
     public static final String NOMBREUSUARIO = "/{nombreusuario}";
 
+    public static final String ID_HABITACION = "/{idHabitacion}";
+
+    public static final String HABITACION = "/habitacion";
+
     @Autowired
     private ReservaController reservaController;
 
@@ -37,6 +41,11 @@ public class ReservaResource {
     @GetMapping
     public List<ReservaDto> getAllReservas(){
         return this.reservaController.getAll();
+    }
+
+    @GetMapping (value = HABITACION+ID_HABITACION)
+    public List<ReservaDto> getReservasByIdHabitacion (@PathVariable String idHabitacion) {
+        return this.reservaController.getAllReservasByIdHabitacion(idHabitacion);
     }
     
     @PostMapping
