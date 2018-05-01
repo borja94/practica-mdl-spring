@@ -27,7 +27,7 @@ public class RoomControlerIT {
 	@Before
 	public void before() {
 		float price = 10;
-		RoomDto roomDto = new RoomDto("hotel1", "caracteriticas", price,RoomType.SINGLE,1 );
+		RoomDto roomDto = new RoomDto("hotel1", "caracteriticas", price,RoomType.SINGLE,"1");
 		this.roomController.InsertRoom(roomDto);
 	}
 	
