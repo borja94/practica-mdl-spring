@@ -32,18 +32,18 @@ public class RoomController {
 			if (hotelsName.contains(item.getHotelName())) {
 				if(reservarepo.findByIdHabitacion(item.getId()) == null) { //Si no hay ninguna reserva con ese ID de habitación la añado directamente
 					result.add(new RoomDto(item.getHotelName(), item.getCharacteristics(), item.getPrice(),
-							item.getRoomType(), 1));
+							item.getRoomType(), item.getId()));
 				} else { //En caso de que ya haya reservas para esa habitación:
 					List<Reserva> reservaCollection = reservarepo.findByIdHabitacion(item.getId());
 					for (Reserva reserva : reservaCollection) { //Itero sobre esas reservas
 						if(reserva.getFecha().equals(startDate) && reserva.getFechaSalida().equals(endDate)) { // Si las fechas de busqueda son las mimsas que las de reserva...
 							if((reserva.getHora().compareTo(endHour) == 1 || reserva.getHoraSalida().compareTo(startHour) == -1)) { //Si las horas son compatibles añado la habitación...
 								result.add(new RoomDto(item.getHotelName(), item.getCharacteristics(), item.getPrice(),
-										item.getRoomType(), 1));
+										item.getRoomType(), item.getId()));
 							}
 						} else { //Si las fechas de reserva son distintas a las de búsqueda, la habitación está libre ese día
 							result.add(new RoomDto(item.getHotelName(), item.getCharacteristics(), item.getPrice(),
-									item.getRoomType(), 1));
+									item.getRoomType(), item.getId()));
 						}
 					}
 				}

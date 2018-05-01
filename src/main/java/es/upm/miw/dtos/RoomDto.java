@@ -9,13 +9,13 @@ public class RoomDto {
 	}
 
 	public RoomDto(String hotelName, String characteristics, Float price, es.upm.miw.documents.core.RoomType roomType,
-			int quantity) {
+			String Id) {
 		super();
 		HotelName = hotelName;
 		Characteristics = characteristics;
 		Price = price;
 		RoomType = roomType;
-		Quantity = quantity;
+		id = Id;
 	}
 
 	private String HotelName;
@@ -25,8 +25,8 @@ public class RoomDto {
 	private Float Price;
 
 	private RoomType RoomType;
-
-	private int Quantity;
+	
+	private String id;
 
 	public String getHotelName() {
 		return HotelName;
@@ -60,12 +60,12 @@ public class RoomDto {
 		RoomType = roomType;
 	}
 
-	public int getQuantity() {
-		return Quantity;
+	public String getId() {
+		return id;
 	}
 
-	public void setQuantity(int quantity) {
-		Quantity = quantity;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }
