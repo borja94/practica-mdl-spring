@@ -22,7 +22,7 @@ public class ReservaRepositoryIT {
     
     @Before
     public void before() {
-        Reserva reserva = new Reserva("SANTOS","JUAN",new Date(), new Date(),"10:20", "11:20");
+        Reserva reserva = new Reserva("SANTOS","JUAN",new Date(), new Date(),"10:20", "11:20", "roomID");
         this.reservarepo.save(reserva);
     }
     

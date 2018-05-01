@@ -2,6 +2,7 @@ package es.upm.miw.controllers;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import es.upm.miw.documents.core.RoomType;
 import es.upm.miw.dtos.RoomDto;
-import es.upm.miw.repositories.core.RoomRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -33,7 +33,9 @@ public class RoomControlerIT {
 	
 	@Test
 	public void GetAllRoomstest() {
-		List<RoomDto> aux = roomController.GetFilteredRooms(null, null, new Date());
+		List<String> hotelsNameList = Arrays.asList("hotel1".split(","));
+		List<String> roomTypesList = Arrays.asList("SINGLE".split(","));
+		List<RoomDto> aux = roomController.GetFilteredRooms(hotelsNameList, roomTypesList, new Date(), new Date(), "09:00", "21:00");
 		assertEquals(true, aux.size() > 0);
 	}
 
