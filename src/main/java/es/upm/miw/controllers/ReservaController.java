@@ -26,7 +26,7 @@ public class ReservaController {
         List<ReservaDto> reservaDtoList = new ArrayList<ReservaDto>();
         for (Reserva reserva : reservaList) {            
             ReservaDto reservaDtoAux = new ReservaDto(reserva.getId(),reserva.getNombreHotel(),
-                    reserva.getNombreUsuario(),reserva.getFecha(),reserva.getHora());
+                    reserva.getNombreUsuario(),reserva.getFecha(),reserva.getFechaSalida(),reserva.getHora(), reserva.getHoraSalida());
             reservaDtoList.add(reservaDtoAux);            
         }
         return reservaDtoList;
@@ -40,8 +40,7 @@ public class ReservaController {
 
     public ReservaDto getReservaById(String id) {
         Reserva reserva = this.reservarepo.findById(id);
-        ReservaDto reservDto = new ReservaDto(reserva.getId(), reserva.getNombreHotel(), reserva.getNombreUsuario(), reserva.getFecha(),
-                reserva.getHora());
+        ReservaDto reservDto = new ReservaDto(reserva.getId(), reserva.getNombreHotel(), reserva.getNombreUsuario(), reserva.getFecha(),reserva.getFechaSalida(),reserva.getHora(), reserva.getHoraSalida());
         return reservDto;
     }
 
@@ -64,7 +63,7 @@ public class ReservaController {
         for (Reserva reserva : reservaList) {
             if (reserva.getNombreUsuario().equals(reservaDto.getNombreUsuario())) {
                 ReservaDto reservaDtoAux = new ReservaDto(reserva.getId(),reserva.getNombreHotel(),
-                        reserva.getNombreUsuario(),reserva.getFecha(),reserva.getHora());
+                        reserva.getNombreUsuario(),reserva.getFecha(),reserva.getFechaSalida(),reserva.getHora(), reserva.getHoraSalida());
                 reservaDtoList.add(reservaDtoAux);
             }
         }
@@ -78,7 +77,7 @@ public class ReservaController {
         for (Reserva reserva : reservaList) {
             if (reserva.getNombreHotel().equals(reservaDto.getNombreHotel())) {
                 ReservaDto reservaDtoAux = new ReservaDto(reserva.getId(),reserva.getNombreHotel(),
-                        reserva.getNombreUsuario(),reserva.getFecha(),reserva.getHora());
+                        reserva.getNombreUsuario(),reserva.getFecha(),reserva.getFechaSalida(),reserva.getHora(), reserva.getHoraSalida());
                 reservaDtoList.add(reservaDtoAux);
             }
         }
