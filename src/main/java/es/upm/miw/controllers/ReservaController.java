@@ -33,8 +33,8 @@ public class ReservaController {
     }
 
     public void CreateReserva(ReservaDto reservaDto) {
-        Reserva reserva = new Reserva(reservaDto.getNombreHotel(), reservaDto.getNombreUsuario(), reservaDto.getFecha(),
-                reservaDto.getHora());
+        Reserva reserva = new Reserva(reservaDto.getNombreHotel(), reservaDto.getNombreUsuario(), reservaDto.getFecha(),reservaDto.getFechaSalida(), 
+                reservaDto.getHora(), reservaDto.getHoraSalida());
         this.reservarepo.save(reserva);
     }
 
@@ -46,14 +46,14 @@ public class ReservaController {
     }
 
     public void modifyReserva(ReservaDto reservaDto) {
-        Reserva reserva = new Reserva(reservaDto.getId(), reservaDto.getNombreHotel(), reservaDto.getNombreUsuario(), reservaDto.getFecha(),
-                reservaDto.getHora());
+        Reserva reserva = new Reserva(reservaDto.getId(), reservaDto.getNombreHotel(), reservaDto.getNombreUsuario(), reservaDto.getFecha(),reservaDto.getFechaSalida(), 
+                reservaDto.getHora(), reservaDto.getHoraSalida());
         this.reservarepo.save(reserva);
     }
 
     public void deleteReserva(ReservaDto reservaDto) {
-        Reserva reserva = new Reserva(reservaDto.getId(), reservaDto.getNombreHotel(), reservaDto.getNombreUsuario(), reservaDto.getFecha(),
-                reservaDto.getHora());
+        Reserva reserva = new Reserva(reservaDto.getId(), reservaDto.getNombreHotel(), reservaDto.getNombreUsuario(), reservaDto.getFecha(),reservaDto.getFechaSalida(), 
+                reservaDto.getHora(), reservaDto.getHoraSalida());
         this.reservarepo.delete(reserva);
 
     }
