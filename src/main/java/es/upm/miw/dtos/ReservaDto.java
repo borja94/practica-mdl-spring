@@ -26,21 +26,25 @@ public class ReservaDto {
 
     }
 
-    public ReservaDto(String nombreHotel, String nombreUsuario, Date fecha, String Hora) {
+    public ReservaDto(String nombreHotel, String nombreUsuario,  Date fecha,  Date fechaSalida,String Hora, String HoraSalida) {
         super();
         this.nombreHotel = nombreHotel;
         this.nombreUsuario = nombreUsuario;
         this.fecha = fecha;
+        this.fechaSalida = fechaSalida;
         this.hora = Hora;
+        this.horaSalida = HoraSalida;
     }
     
-    public ReservaDto(String id , String nombreHotel, String nombreUsuario, Date fecha, String Hora) {
+    
+    public ReservaDto(String id , String nombreHotel, String nombreUsuario,Date fecha,  Date fechaSalida,String Hora, String HoraSalida) {
         super();
-        this.id = id;
         this.nombreHotel = nombreHotel;
         this.nombreUsuario = nombreUsuario;
         this.fecha = fecha;
+        this.fechaSalida = fechaSalida;
         this.hora = Hora;
+        this.horaSalida = HoraSalida;
     }
 
     public String getId() {

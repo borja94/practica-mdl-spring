@@ -22,7 +22,7 @@ public class ReservaControllerIT {
 
     @Test
     public void FunctionsTest() {
-        ReservaDto reservaDto = new ReservaDto("MIRAMAR","JULIAN",new Date() ,"23:00");
+        ReservaDto reservaDto = new ReservaDto("MIRAMAR","JULIAN",new Date() , new Date() ,"23:00", "00:00");
         this.reservaController.CreateReserva(reservaDto);
         assertEquals(true,this.reservaController.getAllReservasFromNombreUsuario(reservaDto).size()>0);        
         
