@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 
 import es.upm.miw.documents.core.Reserva;
 import es.upm.miw.documents.core.Room;
-import es.upm.miw.documents.core.RoomType;
 import es.upm.miw.dtos.RoomDto;
 import es.upm.miw.repositories.core.ReservaRepository;
 import es.upm.miw.repositories.core.RoomRepository;
@@ -31,11 +30,11 @@ public class RoomController {
 		
 		for (Room item : roomCollection) {
 			if (hotelsName.contains(item.getHotelName())) {
-				if(reservarepo.findByRoomId(item.getId()) == null) { //Si no hay ninguna reserva con ese ID de habitación la añado directamente
+				if(reservarepo.findByIdHabitacion(item.getId()) == null) { //Si no hay ninguna reserva con ese ID de habitación la añado directamente
 					result.add(new RoomDto(item.getHotelName(), item.getCharacteristics(), item.getPrice(),
 							item.getRoomType(), 1));
 				} else { //En caso de que ya haya reservas para esa habitación:
-					List<Reserva> reservaCollection = reservarepo.findByRoomId(item.getId());
+					List<Reserva> reservaCollection = reservarepo.findByIdHabitacion(item.getId());
 					for (Reserva reserva : reservaCollection) { //Itero sobre esas reservas
 						if(reserva.getFecha().equals(startDate) && reserva.getFechaSalida().equals(endDate)) { // Si las fechas de busqueda son las mimsas que las de reserva...
 							if((reserva.getHora().compareTo(endHour) == 1 || reserva.getHoraSalida().compareTo(startHour) == -1)) { //Si las horas son compatibles añado la habitación...
@@ -49,9 +48,8 @@ public class RoomController {
 					}
 				}
 			}
-		
-			return result;
 		}
+		return result;
 	}
 
 	public void InsertRoom(RoomDto roomDto) {
