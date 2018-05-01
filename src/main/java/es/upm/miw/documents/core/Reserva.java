@@ -25,6 +25,8 @@ public class Reserva {
     private String hora;
 
     private String horaSalida;
+
+    private String idHabitacion;
     
     public Reserva() {
         
@@ -42,7 +44,7 @@ public class Reserva {
     }
     
     
-    public Reserva(String nombreHotel , String nombreUsuario , Date fecha , Date fechaSalida ,  String Hora, String horaSalida) {
+    public Reserva(String nombreHotel , String nombreUsuario , Date fecha , Date fechaSalida ,  String Hora, String horaSalida, String idHabitacion) {
         super();
         this.nombreHotel = nombreHotel;
         this.nombreUsuario = nombreUsuario;
@@ -50,6 +52,7 @@ public class Reserva {
         this.fechaSalida = fechaSalida;
         this.hora = Hora;
         this.horaSalida = horaSalida;
+        this.idHabitacion = idHabitacion;
     }
 
 
@@ -117,7 +120,15 @@ public class Reserva {
 	public void setHoraSalida(String horaSalida) {
 		this.horaSalida = horaSalida;
 	}
-	
+
+    public String getIdHabitacion() {
+        return idHabitacion;
+    }
+
+    public void setIdHabitacion(String idHabitacion) {
+        this.idHabitacion = idHabitacion;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -174,7 +185,7 @@ public class Reserva {
     @Override
     public String toString() {
         return "Reserva [id=" + id + ", nombreHotel=" + nombreHotel + ", nombreUsuario=" + nombreUsuario + ", fecha=" + fecha + ", hora="
-                + hora + ",fecha salida = "  + fechaSalida + ", hora salida=" + horaSalida + "]";
+                + hora + ",fecha salida = "  + fechaSalida + ", hora salida=" + horaSalida + ", id_habitacion= "+ idHabitacion +" ]";
     }
 
 }

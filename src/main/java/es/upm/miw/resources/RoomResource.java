@@ -1,5 +1,6 @@
 package es.upm.miw.resources;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import es.upm.miw.controllers.RoomController;
 import es.upm.miw.dtos.RoomDto;
 
+//Crear controlador, repositorio (metodos por defecto) y lo hacemos en memoria
 
 @RestController
 @RequestMapping(RoomResource.ROOM)
@@ -26,9 +28,14 @@ public class RoomResource {
 	 
 	 @GetMapping
 	 public List<RoomDto> getAllRoomFiltered(String hotelsName, String roomTypes, 
-			 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("searchDate") Date searchDate){
+			 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("startDate") Date startDate,
+			 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("endDate") Date endDate,
+			  String startHour, String endHour){
 		 
-		 return roomController.GetFilteredRooms(null, null, null);		 
+		 List<String> hotelsNameList = Arrays.asList(hotelsName.split(","));
+		 List<String> roomTypesList = Arrays.asList(roomTypes.split(","));
+		 
+		 return roomController.GetFilteredRooms(hotelsNameList, roomTypesList, startDate, endDate, startHour, endHour);
 	 }
-
+	
 }

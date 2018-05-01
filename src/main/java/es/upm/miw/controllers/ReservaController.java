@@ -26,7 +26,7 @@ public class ReservaController {
         List<ReservaDto> reservaDtoList = new ArrayList<ReservaDto>();
         for (Reserva reserva : reservaList) {            
             ReservaDto reservaDtoAux = new ReservaDto(reserva.getId(),reserva.getNombreHotel(),
-                    reserva.getNombreUsuario(),reserva.getFecha(),reserva.getFechaSalida(),reserva.getHora(), reserva.getHoraSalida());
+                    reserva.getNombreUsuario(),reserva.getFecha(),reserva.getHora(), reserva.getIdHabitacion());
             reservaDtoList.add(reservaDtoAux);            
         }
         return reservaDtoList;
@@ -34,13 +34,14 @@ public class ReservaController {
 
     public void CreateReserva(ReservaDto reservaDto) {
         Reserva reserva = new Reserva(reservaDto.getNombreHotel(), reservaDto.getNombreUsuario(), reservaDto.getFecha(),reservaDto.getFechaSalida(), 
-                reservaDto.getHora(), reservaDto.getHoraSalida());
+                reservaDto.getHora(), reservaDto.getHoraSalida(), reservaDto.getIdHabitacion());
         this.reservarepo.save(reserva);
     }
 
     public ReservaDto getReservaById(String id) {
         Reserva reserva = this.reservarepo.findById(id);
-        ReservaDto reservDto = new ReservaDto(reserva.getId(), reserva.getNombreHotel(), reserva.getNombreUsuario(), reserva.getFecha(),reserva.getFechaSalida(),reserva.getHora(), reserva.getHoraSalida());
+        ReservaDto reservDto = new ReservaDto(reserva.getId(), reserva.getNombreHotel(), reserva.getNombreUsuario(), reserva.getFecha(),
+                reserva.getHora(), reserva.getIdHabitacion());
         return reservDto;
     }
 
@@ -63,7 +64,7 @@ public class ReservaController {
         for (Reserva reserva : reservaList) {
             if (reserva.getNombreUsuario().equals(reservaDto.getNombreUsuario())) {
                 ReservaDto reservaDtoAux = new ReservaDto(reserva.getId(),reserva.getNombreHotel(),
-                        reserva.getNombreUsuario(),reserva.getFecha(),reserva.getFechaSalida(),reserva.getHora(), reserva.getHoraSalida());
+                        reserva.getNombreUsuario(),reserva.getFecha(),reserva.getHora(), reserva.getIdHabitacion());
                 reservaDtoList.add(reservaDtoAux);
             }
         }
@@ -77,11 +78,22 @@ public class ReservaController {
         for (Reserva reserva : reservaList) {
             if (reserva.getNombreHotel().equals(reservaDto.getNombreHotel())) {
                 ReservaDto reservaDtoAux = new ReservaDto(reserva.getId(),reserva.getNombreHotel(),
-                        reserva.getNombreUsuario(),reserva.getFecha(),reserva.getFechaSalida(),reserva.getHora(), reserva.getHoraSalida());
+                        reserva.getNombreUsuario(),reserva.getFecha(),reserva.getHora(), reserva.getIdHabitacion());
                 reservaDtoList.add(reservaDtoAux);
             }
         }
         return reservaDtoList;
+    }
+
+    public List<ReservaDto> getAllReservasByIdHabitacion(String idHabitacion) {
+        List<ReservaDto> result = new ArrayList<>();
+        for (Reserva reserva : this.reservarepo.findByIdHabitacion(idHabitacion)) {
+            ReservaDto reservaDto = new ReservaDto(reserva.getId(),reserva.getNombreHotel(),
+                    reserva.getNombreUsuario(),reserva.getFecha(),reserva.getHora(), reserva.getIdHabitacion());
+            result.add(reservaDto);
+        }
+
+        return  result;
     }
 
 }

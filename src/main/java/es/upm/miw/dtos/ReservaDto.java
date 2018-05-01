@@ -22,6 +22,8 @@ public class ReservaDto {
 
     private String horaSalida;
 
+    private String idHabitacion;
+
     public ReservaDto() {
 
     }
@@ -36,15 +38,14 @@ public class ReservaDto {
         this.horaSalida = HoraSalida;
     }
     
-    
-    public ReservaDto(String id , String nombreHotel, String nombreUsuario,Date fecha,  Date fechaSalida,String Hora, String HoraSalida) {
+    public ReservaDto(String id , String nombreHotel, String nombreUsuario, Date fecha, String Hora, String idHabitacion) {
         super();
         this.nombreHotel = nombreHotel;
         this.nombreUsuario = nombreUsuario;
         this.fecha = fecha;
         this.fechaSalida = fechaSalida;
         this.hora = Hora;
-        this.horaSalida = HoraSalida;
+        this.idHabitacion = idHabitacion;
     }
 
     public String getId() {
@@ -85,6 +86,14 @@ public class ReservaDto {
 
     public void setHora(String hora) {
         this.hora = hora;
+    }
+
+    public String getIdHabitacion() {
+        return idHabitacion;
+    }
+
+    public void setIdHabitacion(String idHabitacion) {
+        this.idHabitacion = idHabitacion;
     }
 
     @Override
@@ -139,7 +148,7 @@ public class ReservaDto {
     @Override
     public String toString() {
         return "ReservaDto [id=" + id + ", nombreHotel=" + nombreHotel + ", nombreUsuario=" + nombreUsuario + ", fecha=" + fecha + ", hora="
-                + hora + "]";
+                + hora + ", idHabitacion = " + idHabitacion +" ]";
     }
 
 	public Date getFechaSalida() {
