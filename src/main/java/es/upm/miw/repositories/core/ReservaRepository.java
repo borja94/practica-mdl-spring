@@ -14,4 +14,6 @@ public interface ReservaRepository extends MongoRepository<Reserva,String>{
 
     public List<Reserva> findByNombreUsuario(String nombreUsuario);
 
+    public List<Reserva> findByIdHabitacion(String idHabitacion);
+
 }
