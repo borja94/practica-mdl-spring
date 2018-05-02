@@ -66,6 +66,13 @@ public class RoomController {
 		return result;
 	}
 
+	
+	public void InsertRoom(RoomDto roomDto) {
+		Room aux = new Room(1,roomDto.getHotelName(),roomDto.getCharacteristics(),roomDto.getPrice(),roomDto.getRoomType());
+		this.roomRespository.insert(aux);
+	}
+	
+	
 	private boolean isCorrectType (RoomType tipoHabitacion, List<String> tipos ){
 		for (String tipoPermitido : tipos) {
 			if (tipoPermitido.equals(tipoHabitacion.toString())) {
