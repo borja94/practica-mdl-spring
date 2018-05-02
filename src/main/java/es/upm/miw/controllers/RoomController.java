@@ -29,7 +29,6 @@ public class RoomController {
 
 		List<Room> roomCollection = roomRespository.findAll();
 
-//		Boolean seguirHabitacion = true;
 		for (int i = 0; i < roomCollection.size(); i++) {
 			Room habitacion = roomCollection.get(i);
 			if (hotelsName.contains(habitacion.getHotelName()) && isCorrectType (habitacion.getRoomType(),roomTypes)) {
@@ -42,24 +41,22 @@ public class RoomController {
 					Boolean seguirReserva = true;
 					for (int j = 0; j < reservaCollection.size() && seguirReserva; j++) { // Itero sobre esas reservas
 						Reserva reserva = reservaCollection.get(j);
-						if (reserva.getFecha().equals(reserva.getFechaSalida())){
+						if (startDate.equals(endDate)){
 							// si la fecha inicio y fin de la reserva es el mismo día..
-							if (comprobarHoras(startHour, endHour, reserva)) { // si esta libre a esas horas...
-								result.add(new RoomDto(habitacion.getHotelName(), habitacion.getCharacteristics(), habitacion.getPrice(),
-										habitacion.getRoomType(), habitacion.getId()));
-							} else {
+							if (!comprobarHoras(startHour, endHour, reserva)) { // si esta libre a esas horas...
 								// ha encontrado una reserva para esas horas.. asiq sale dl bucle y NO se añade la habitacion
 								seguirReserva = false;
 							}
 						}else {
 							// si la reserva es de varios dias..
-							if (comprobarDisponibilidad()) {
-								result.add(new RoomDto(habitacion.getHotelName(), habitacion.getCharacteristics(), habitacion.getPrice(),
-										habitacion.getRoomType(), habitacion.getId()));
-							} else {
+							if (!comprobarDisponibilidad(startDate, endDate, reserva)) {
 								seguirReserva = false;
 							}
 						}
+					}
+					if (seguirReserva){
+						result.add(new RoomDto(habitacion.getHotelName(), habitacion.getCharacteristics(), habitacion.getPrice(),
+								habitacion.getRoomType(), habitacion.getId()));
 					}
 				}
 
@@ -70,7 +67,7 @@ public class RoomController {
 
 	private boolean isCorrectType (RoomType tipoHabitacion, List<String> tipos ){
 		for (String tipoPermitido : tipos) {
-			if (tipoPermitido.equals(tipoHabitacion)) {
+			if (tipoPermitido.equals(tipoHabitacion.toString())) {
 				return true;
 			}
 		}
@@ -79,34 +76,31 @@ public class RoomController {
 
 	private boolean comprobarDisponibilidad(Date startDate, Date endDate, Reserva reserva){
 
-		if ((startDate.after(reserva.getFecha()) && startDate.before(reserva.getFechaSalida())) ||
-				(endDate.after(reserva.getFecha()) && endDate.before(reserva.getFechaSalida()))){
-			// si la reserva que se intenta hacer, la fecha inicio o fin está comprendida entre un periodo de ocupacion
-			return false;
-		} else if (startDate.before(reserva.getFecha()) && ) {
-
-		} else {
+		if (startDate.before(reserva.getFecha()) && endDate.before(reserva.getFecha())){
 			return true;
 		}
+
+		if (startDate.after(reserva.getFechaSalida()) && endDate.after(reserva.getFechaSalida())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean comprobarHoras(String startHour, String endHour, Reserva reserva){
 		int horaEntradaReserva = Integer.parseInt(reserva.getHora().split(":")[0]);
 		int horaSalidaReserva = Integer.parseInt(reserva.getHoraSalida().split(":")[0]);
-		int horaEntrada = Integer.parseInt(startHour);
-		int horaSalida = Integer.parseInt(endHour);
+		int horaEntrada = Integer.parseInt(startHour.split(":")[0]);
+		int horaSalida = Integer.parseInt(endHour.split(":")[0]);
 
-		if ((horaEntrada > horaEntradaReserva && horaEntrada < horaSalidaReserva) ||
-			(horaSalida > horaEntradaReserva && horaSalida < horaSalidaReserva)){
-			// la hora de entrada o salida de la posible reserva esta comprendida entre horas de reserva existente
-			return false;
-		} else if ((horaEntradaReserva > horaEntrada && horaEntradaReserva < horaSalida) ||
-				(horaSalidaReserva > horaEntrada && horaSalidaReserva < horaSalida)){
-			// existe una reserva entre las horas de la posible reserva
-			return false;
-		} else {
-			// las horas de la posible reserva son antes o despues de la reserva existente
+		if (horaEntrada < horaEntradaReserva && horaSalida < horaSalidaReserva) {
 			return true;
 		}
+
+		if (horaEntrada > horaSalidaReserva && horaSalida > horaSalidaReserva) {
+			return true;
+		}
+
+		return false;
 	}
 }
